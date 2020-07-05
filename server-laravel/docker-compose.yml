@@ -1,0 +1,20 @@
+version: "2.3"
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: .docker/Dockerfile
+    ports:
+      - 80
+      # - 3000:3000
+    volumes:
+      - .:/var/www/html:delegated
+    networks:
+      - mysql-network
+    mem_limit: 1G
+
+networks:
+  mysql-network:
+    name: mysql-network
+    external: true

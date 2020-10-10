@@ -12,10 +12,10 @@ services:
     volumes:
       - .:/var/www/html:delegated
     networks:
-      - mysql-network
+      - db-network
     mem_limit: 1G
 
 networks:
-  mysql-network:
-    name: mysql-network
+  db-network:
+    name: db-network
     external: true

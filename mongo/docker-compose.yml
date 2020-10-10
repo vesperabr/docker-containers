@@ -1,0 +1,38 @@
+version: "2.3"
+
+services:
+  mongo:
+    image: mongo
+    ports:
+      - ${MONGO_PORT}:27017
+    volumes:
+      - mongo_db:/data/db
+    networks:
+      - db-network
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD}
+    mem_limit: 1G
+
+  mongo-express:
+      image: mongo-express
+      ports:
+        - ${MONGO_EXPRESS_PORT}:8081
+      environment:
+        ME_CONFIG_MONGODB_PORT: ${MONGO_PORT}
+        ME_CONFIG_MONGODB_ADMINUSERNAME: root
+        ME_CONFIG_MONGODB_ADMINPASSWORD: ${MONGO_PASSWORD}
+      links:
+        - mongo
+      networks:
+        - db-network
+      mem_limit: 1G
+
+volumes:
+  mongo_db:
+    name: mongo_db
+
+networks:
+  db-network:
+    name: db-network
+    external: true
